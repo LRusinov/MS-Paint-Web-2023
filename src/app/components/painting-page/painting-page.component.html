@@ -1,0 +1,12 @@
+<div class="container">
+  <canvas class="canvas" #canvas [style.border]="'2px solid black'" width="1200" height="600"></canvas>
+  <div>
+    <button mat-raised-button [ngClass]="{ 'selected': currentColor === 'black' }" class="black" (click)="setColor('black')"></button>
+    <button mat-raised-button [ngClass]="{ 'selected': currentColor === 'blue' }" class="blue" (click)="setColor('blue')"></button>
+    <button mat-raised-button [ngClass]="{ 'selected': currentColor === 'deeppink' }" class="deeppink" (click)="setColor('deeppink')"></button>
+    <button mat-raised-button [ngClass]="{ 'selected': currentColor === 'green' }" class="green" (click)="setColor('green')"></button>
+    <button mat-raised-button [ngClass]="{ 'selected': currentColor === 'yellow' }" class="yellow" (click)="setColor('yellow')"></button>
+    <button mat-raised-button [ngClass]="{ 'selected': currentColor === 'red' }" class="red" (click)="setColor('red')"></button>
+    <button mat-raised-button (click)="clear()">clear</button>
+  </div>
+</div>
