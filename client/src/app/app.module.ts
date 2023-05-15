@@ -10,9 +10,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { FileSaverComponent } from './components/file-saver/file-saver.component';
 
 @NgModule({
-  declarations: [AppComponent, PaintingPageComponent, ToolbarComponent],
+  declarations: [AppComponent, PaintingPageComponent, ToolbarComponent, FileSaverComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
