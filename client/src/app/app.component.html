@@ -1,1 +1,252 @@
 <router-outlet></router-outlet>
+<div class="toolbar">
+  <div class="row">
+    <button
+      mat-raised-button
+      [ngClass]="{ selected: currentTool === 'clipboard' }"
+      (click)="setTool('clipboard')"
+      class="big-button"
+    >
+      <mat-icon class="big-icon" svgIcon="clipboard"></mat-icon>
+    </button>
+    <div>
+      <button
+        mat-raised-button
+        [ngClass]="{ selected: currentTool === 'scissors' }"
+        (click)="setTool('scissors')"
+        class="basic-button"
+      >
+        <mat-icon class="icon" svgIcon="scissors"></mat-icon>
+      </button>
+      <button
+        mat-raised-button
+        [ngClass]="{ selected: currentTool === 'copy' }"
+        (click)="setTool('copy')"
+        class="basic-button"
+      >
+        <mat-icon class="icon" svgIcon="copy"></mat-icon>
+      </button>
+    </div>
+    <div class="row">
+      <button
+        mat-raised-button
+        [ngClass]="{ selected: currentTool === 'selection' }"
+        (click)="setTool('selection')"
+        class="big-button"
+      >
+        <mat-icon class="big-icon" svgIcon="selection"></mat-icon>
+      </button>
+    </div>
+    <div>
+      <button
+        mat-raised-button
+        [ngClass]="{ selected: currentTool === 'pencil' }"
+        (click)="setTool('pencil')"
+        class="basic-button"
+      >
+        <mat-icon class="icon" svgIcon="pencil"></mat-icon>
+      </button>
+      <button
+        mat-raised-button
+        [ngClass]="{ selected: currentTool === 'eraser' }"
+        (click)="setTool('eraser')"
+        class="basic-button"
+      >
+        <mat-icon class="icon" svgIcon="eraser"></mat-icon>
+      </button>
+    </div>
+    <div>
+      <button
+        mat-raised-button
+        [ngClass]="{ selected: currentTool === 'bucket' }"
+        (click)="setTool('bucket')"
+        class="basic-button"
+      >
+        <mat-icon class="icon" svgIcon="bucket"></mat-icon>
+      </button>
+      <button
+        mat-raised-button
+        [ngClass]="{ selected: currentTool === 'dropper' }"
+        (click)="setTool('dropper')"
+        class="basic-button"
+      >
+        <mat-icon class="icon" svgIcon="dropper"></mat-icon>
+      </button>
+    </div>
+    <div>
+      <button
+        mat-raised-button
+        [ngClass]="{ selected: currentTool === 'type' }"
+        (click)="setTool('type')"
+        class="basic-button"
+      >
+        <mat-icon class="icon" svgIcon="type"></mat-icon>
+      </button>
+      <button
+        mat-raised-button
+        [ngClass]="{ selected: currentTool === 'magnifier' }"
+        (click)="setTool('magnifier')"
+        class="basic-button"
+      >
+        <mat-icon class="icon" svgIcon="magnifier"></mat-icon>
+      </button>
+    </div>
+    <div>
+      <ng-container [ngSwitch]="selectedArrowTool">
+        <button
+          mat-raised-button
+          [ngClass]="{ selected: currentTool === 'pen' }"
+          (click)="setTool('pen')"
+          *ngSwitchCase="'pen'"
+          class="change-button"
+        >
+          <mat-icon class="icon" svgIcon="pen"></mat-icon>
+        </button>
+        <button
+          mat-raised-button
+          [ngClass]="{ selected: currentTool === 'highlighter' }"
+          (click)="setTool('highlighter')"
+          *ngSwitchCase="'highlighter'"
+          class="change-button"
+        >
+          <mat-icon class="icon" svgIcon="highlighter"></mat-icon>
+        </button>
+      </ng-container>
+      <button mat-raised-button class="arrow-button" [matMenuTriggerFor]="menu">
+        <mat-icon>arrow_drop_down</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button
+          class="menu-option"
+          mat-menu-item
+          (click)="selectedArrowTool = 'highlighter'; setTool('highlighter')"
+        >
+          <mat-icon svgIcon="highlighter"></mat-icon>
+          <span>Highlighter</span>
+        </button>
+        <button
+          class="menu-option"
+          mat-menu-item
+          (click)="selectedArrowTool = 'pen'; setTool('pen')"
+        >
+          <mat-icon svgIcon="pen"></mat-icon>
+          <span>Marker Pen</span>
+        </button>
+      </mat-menu>
+    </div>
+    <div class="color-container">
+      <div class="color-column">
+        <button
+          mat-raised-button
+          [ngClass]="{ selected: currentColor === 'black' }"
+          class="black"
+          (click)="setColor('black')"
+        ></button>
+        <button
+          mat-raised-button
+          [ngClass]="{ selected: currentColor === 'white' }"
+          class="white"
+          (click)="setColor('white')"
+        ></button>
+      </div>
+      <div class="color-column">
+        <button
+          mat-raised-button
+          [ngClass]="{ selected: currentColor === 'lightgrey' }"
+          class="lightgrey"
+          (click)="setColor('lightgrey')"
+        ></button>
+        <button
+          mat-raised-button
+          [ngClass]="{ selected: currentColor === 'brown' }"
+          class="brown"
+          (click)="setColor('brown')"
+        ></button>
+      </div>
+      <div class="color-column">
+        <button
+          mat-raised-button
+          [ngClass]="{ selected: currentColor === 'red' }"
+          class="red"
+          (click)="setColor('red')"
+        ></button>
+        <button
+          mat-raised-button
+          [ngClass]="{ selected: currentColor === 'deeppink' }"
+          class="deeppink"
+          (click)="setColor('deeppink')"
+        ></button>
+      </div>
+      <div class="color-column">
+        <button
+          mat-raised-button
+          [ngClass]="{ selected: currentColor === 'yellow' }"
+          class="yellow"
+          (click)="setColor('yellow')"
+        ></button>
+        <button
+          mat-raised-button
+          [ngClass]="{ selected: currentColor === 'orange' }"
+          class="orange"
+          (click)="setColor('orange')"
+        ></button>
+      </div>
+      <div class="color-column">
+        <button
+          mat-raised-button
+          [ngClass]="{ selected: currentColor === 'green' }"
+          class="green"
+          (click)="setColor('green')"
+        ></button>
+        <button
+          mat-raised-button
+          [ngClass]="{ selected: currentColor === 'lightgreen' }"
+          class="lightgreen"
+          (click)="setColor('lightgreen')"
+        ></button>
+      </div>
+      <div class="color-column">
+        <button
+          mat-raised-button
+          [ngClass]="{ selected: currentColor === 'blue' }"
+          class="blue"
+          (click)="setColor('blue')"
+        ></button>
+        <button
+          mat-raised-button
+          [ngClass]="{ selected: currentColor === 'turquoise' }"
+          class="turquoise"
+          (click)="setColor('turquoise')"
+        ></button>
+      </div>
+      <div class="color-column">
+        <button
+          mat-raised-button
+          [ngClass]="{ selected: currentColor === 'purple' }"
+          class="purple"
+          (click)="setColor('purple')"
+        ></button>
+        <button
+          mat-raised-button
+          [ngClass]="{ selected: currentColor === 'plum' }"
+          class="plum"
+          (click)="setColor('plum')"
+        ></button>
+      </div>
+      <button mat-raised-button (click)="clear()">clear</button>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <canvas
+    class="canvas"
+    id="canvas"
+    #canvas
+    [style.border]="'2px solid black'"
+    width="1200"
+    height="600"
+  ></canvas>
+  <button class="download-button" id="download" (click)="downloadCanvas()">
+    Download Canvas
+  </button>
+</div>

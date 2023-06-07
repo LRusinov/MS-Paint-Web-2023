@@ -1,18 +1,21 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 
 @Component({
+  selector: 'app-painting-page',
   templateUrl: './painting-page.component.html',
-  styleUrls: ['./painting-page.component.css']
+  styleUrls: ['./painting-page.component.css'],
 })
 export class PaintingPageComponent {
-  @ViewChild('canvas', { static: true }) canvas!: ElementRef<HTMLCanvasElement>; 
-  context!: CanvasRenderingContext2D; 
+  @ViewChild('canvas', { static: true }) canvas!: ElementRef<HTMLCanvasElement>;
+  context!: CanvasRenderingContext2D;
   // Sets the default color
-  currentColor: string = 'black'; 
+  currentColor: string = 'black';
 
   ngAfterViewInit() {
     // Getting the context of Canvas for painting
-    this.context = this.canvas.nativeElement.getContext('2d') as CanvasRenderingContext2D;
+    this.context = this.canvas.nativeElement.getContext(
+      '2d'
+    ) as CanvasRenderingContext2D;
     this.context.strokeStyle = this.currentColor;
 
     //Mouse position variables
@@ -43,13 +46,18 @@ export class PaintingPageComponent {
   }
 
   // Sets the color for writing
-  setColor(color:string){
+  setColor(color: string) {
     this.context.strokeStyle = color;
-    this.currentColor=color
+    this.currentColor = color;
   }
 
   // Clears the canvas
   clear() {
-    this.context.clearRect(0, 0, this.canvas.nativeElement.width, this.canvas.nativeElement.height);
+    this.context.clearRect(
+      0,
+      0,
+      this.canvas.nativeElement.width,
+      this.canvas.nativeElement.height
+    );
   }
 }

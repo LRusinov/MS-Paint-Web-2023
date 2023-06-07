@@ -1,0 +1,179 @@
+.toolbar {
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+.color-container{
+    display: flex;
+    flex-direction: row;
+}
+
+.color-column{
+    display: flex;
+    flex-direction: column;
+}
+
+.basic-button {
+    background-color: #3f51b5 !important;
+    color: white !important;
+    display: flex;
+    width: 20px;
+    margin: 3px;
+}
+  
+.big-button {
+    background-color: #3f51b5 !important;
+    color: white !important;
+    display: flex;
+    height: 75px;
+    margin: 3px;
+}
+
+.change-button{
+    background-color: #3f51b5 !important;
+    color: white !important;
+    display: flex;
+    height: 60px;
+    margin: 3px;
+    margin-bottom: 0;
+}
+
+.arrow-button{
+    background-color: #3f51b5 !important;
+    color: white !important;
+    display: flex;
+    width: 20px;
+    height: 15px;
+    margin: 3px;
+    margin-top: 0px;
+}
+
+.big-icon {
+    width: 24px;
+    height: 24px;
+    transform: scale(1.9);
+    padding-left: 6px; 
+}
+
+.icon {
+    width: 24px;
+    height: 24px;
+    transform: scale(1.6); 
+    padding-left: 6px; 
+}
+  
+.menu-option {
+    background-color: #3f51b5;
+}
+
+.menu-option:hover {
+    background-color: #717bb6;
+}
+  
+.selected {
+    border: 3px solid black
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+ }
+ 
+.canvas {
+    margin-bottom: 20px;
+}
+
+button{
+    margin: 1px;
+}
+
+button.black {
+    background-color: black;
+}
+
+button.white{
+    background-color: white;
+}
+
+button.lightgrey {
+    background-color: lightgrey;
+}
+
+button.brown{
+    background-color: brown;
+}
+
+button.red {
+    background-color: red;
+}
+
+button.deeppink {
+    background-color: deeppink;
+}
+
+button.yellow {
+    background-color: yellow;
+}
+
+button.orange{
+    background-color: orange;
+}
+
+button.green {
+    background-color: green;
+}
+
+button.lightgreen{
+    background-color: lightgreen;
+}
+
+button.blue {
+    background-color: blue;
+}
+
+button.turquoise {
+    background-color: turquoise;
+}
+
+button.purple {
+    background-color: purple;
+}
+
+button.plum {
+    background-color: plum;
+}
+
+.selected {
+    border: 3px solid rgb(111, 111, 111);
+}
+   
+.download-button {
+    background: linear-gradient(45deg, #ff6d1b, #e0417f);
+    font-size: 1.25rem;
+    padding: 0.75rem 1.5rem;
+    line-height: 1.5rem;
+    will-change: transform, filter;
+    margin: 0 0 1rem 0;
+    transition: all 0.15s ease-out;
+    cursor: pointer;
+    border-radius: 100px;
+    display: block;
+    display: block;
+    border: none;
+    color: white;
+    font-family: Inter, sans-serif;
+    filter: drop-shadow(0 15px 15px rgba(0,0,0,0.3));
+    font-variation-settings: 'wght' 600;
+    perspective-origin: 0 0;
+    letter-spacing: 0;
+}
