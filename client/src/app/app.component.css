@@ -78,7 +78,7 @@
     background-color: #717bb6;
 }
   
-.selected {
+.selectedTool {
     border: 3px solid black
 }
 
@@ -90,7 +90,12 @@
  }
  
 .canvas {
+    border: none!important;
     margin-bottom: 20px;
+}
+
+.canvas-container{
+    border: 2px solid black;
 }
 
 button{
@@ -153,11 +158,15 @@ button.plum {
     background-color: plum;
 }
 
-.selected {
+.selectedColor {
     border: 3px solid rgb(111, 111, 111);
 }
 
 .download-button {
   background-color: #3f51b5 !important;
   color: white !important;
+}
+
+.element.style{
+    border: none!important;
 }

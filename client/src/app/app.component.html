@@ -3,7 +3,7 @@
   <div class="row">
     <button
       mat-raised-button
-      [ngClass]="{ selected: currentTool === 'clipboard' }"
+      [ngClass]="{ selectedTool: currentTool === 'clipboard' }"
       (click)="setTool('clipboard')"
       class="big-button"
     >
@@ -12,7 +12,7 @@
     <div>
       <button
         mat-raised-button
-        [ngClass]="{ selected: currentTool === 'scissors' }"
+        [ngClass]="{ selectedTool: currentTool === 'scissors' }"
         (click)="setTool('scissors')"
         class="basic-button"
       >
@@ -20,7 +20,7 @@
       </button>
       <button
         mat-raised-button
-        [ngClass]="{ selected: currentTool === 'copy' }"
+        [ngClass]="{ selectedTool: currentTool === 'copy' }"
         (click)="setTool('copy')"
         class="basic-button"
       >
@@ -30,7 +30,7 @@
     <div class="row">
       <button
         mat-raised-button
-        [ngClass]="{ selected: currentTool === 'selection' }"
+        [ngClass]="{ selectedTool: currentTool === 'selection' }"
         (click)="setTool('selection')"
         class="big-button"
       >
@@ -40,7 +40,7 @@
     <div>
       <button
         mat-raised-button
-        [ngClass]="{ selected: currentTool === 'pencil' }"
+        [ngClass]="{ selectedTool: currentTool === 'pencil' }"
         (click)="setTool('pencil')"
         class="basic-button"
       >
@@ -48,7 +48,7 @@
       </button>
       <button
         mat-raised-button
-        [ngClass]="{ selected: currentTool === 'eraser' }"
+        [ngClass]="{ selectedTool: currentTool === 'eraser' }"
         (click)="setTool('eraser')"
         class="basic-button"
       >
@@ -58,7 +58,7 @@
     <div>
       <button
         mat-raised-button
-        [ngClass]="{ selected: currentTool === 'bucket' }"
+        [ngClass]="{ selectedTool: currentTool === 'bucket' }"
         (click)="setTool('bucket')"
         class="basic-button"
       >
@@ -66,7 +66,7 @@
       </button>
       <button
         mat-raised-button
-        [ngClass]="{ selected: currentTool === 'dropper' }"
+        [ngClass]="{ selectedTool: currentTool === 'dropper' }"
         (click)="setTool('dropper')"
         class="basic-button"
       >
@@ -76,7 +76,7 @@
     <div>
       <button
         mat-raised-button
-        [ngClass]="{ selected: currentTool === 'type' }"
+        [ngClass]="{ selectedTool: currentTool === 'type' }"
         (click)="setTool('type')"
         class="basic-button"
       >
@@ -84,7 +84,7 @@
       </button>
       <button
         mat-raised-button
-        [ngClass]="{ selected: currentTool === 'magnifier' }"
+        [ngClass]="{ selectedTool: currentTool === 'magnifier' }"
         (click)="setTool('magnifier')"
         class="basic-button"
       >
@@ -95,7 +95,7 @@
       <ng-container [ngSwitch]="selectedArrowTool">
         <button
           mat-raised-button
-          [ngClass]="{ selected: currentTool === 'pen' }"
+          [ngClass]="{ selectedTool: currentTool === 'pen' }"
           (click)="setTool('pen')"
           *ngSwitchCase="'pen'"
           class="change-button"
@@ -104,7 +104,7 @@
         </button>
         <button
           mat-raised-button
-          [ngClass]="{ selected: currentTool === 'highlighter' }"
+          [ngClass]="{ selectedTool: currentTool === 'highlighter' }"
           (click)="setTool('highlighter')"
           *ngSwitchCase="'highlighter'"
           class="change-button"
@@ -138,13 +138,13 @@
       <div class="color-column">
         <button
           mat-raised-button
-          [ngClass]="{ selected: currentColor === 'black' }"
+          [ngClass]="{ selectedColor: currentColor === 'black' }"
           class="black"
           (click)="setColor('black')"
         ></button>
         <button
           mat-raised-button
-          [ngClass]="{ selected: currentColor === 'white' }"
+          [ngClass]="{ selectedColor: currentColor === 'white' }"
           class="white"
           (click)="setColor('white')"
         ></button>
@@ -152,13 +152,13 @@
       <div class="color-column">
         <button
           mat-raised-button
-          [ngClass]="{ selected: currentColor === 'lightgrey' }"
+          [ngClass]="{ selectedColor: currentColor === 'lightgrey' }"
           class="lightgrey"
           (click)="setColor('lightgrey')"
         ></button>
         <button
           mat-raised-button
-          [ngClass]="{ selected: currentColor === 'brown' }"
+          [ngClass]="{ selectedColor: currentColor === 'brown' }"
           class="brown"
           (click)="setColor('brown')"
         ></button>
@@ -166,13 +166,13 @@
       <div class="color-column">
         <button
           mat-raised-button
-          [ngClass]="{ selected: currentColor === 'red' }"
+          [ngClass]="{ selectedColor: currentColor === 'red' }"
           class="red"
           (click)="setColor('red')"
         ></button>
         <button
           mat-raised-button
-          [ngClass]="{ selected: currentColor === 'deeppink' }"
+          [ngClass]="{ selectedColor: currentColor === 'deeppink' }"
           class="deeppink"
           (click)="setColor('deeppink')"
         ></button>
@@ -180,13 +180,13 @@
       <div class="color-column">
         <button
           mat-raised-button
-          [ngClass]="{ selected: currentColor === 'yellow' }"
+          [ngClass]="{ selectedColor: currentColor === 'yellow' }"
           class="yellow"
           (click)="setColor('yellow')"
         ></button>
         <button
           mat-raised-button
-          [ngClass]="{ selected: currentColor === 'orange' }"
+          [ngClass]="{ selectedColor: currentColor === 'orange' }"
           class="orange"
           (click)="setColor('orange')"
         ></button>
@@ -194,13 +194,13 @@
       <div class="color-column">
         <button
           mat-raised-button
-          [ngClass]="{ selected: currentColor === 'green' }"
+          [ngClass]="{ selectedColor: currentColor === 'green' }"
           class="green"
           (click)="setColor('green')"
         ></button>
         <button
           mat-raised-button
-          [ngClass]="{ selected: currentColor === 'lightgreen' }"
+          [ngClass]="{ selectedColor: currentColor === 'lightgreen' }"
           class="lightgreen"
           (click)="setColor('lightgreen')"
         ></button>
@@ -208,13 +208,13 @@
       <div class="color-column">
         <button
           mat-raised-button
-          [ngClass]="{ selected: currentColor === 'blue' }"
+          [ngClass]="{ selectedColor: currentColor === 'blue' }"
           class="blue"
           (click)="setColor('blue')"
         ></button>
         <button
           mat-raised-button
-          [ngClass]="{ selected: currentColor === 'turquoise' }"
+          [ngClass]="{ selectedColor: currentColor === 'turquoise' }"
           class="turquoise"
           (click)="setColor('turquoise')"
         ></button>
@@ -222,13 +222,13 @@
       <div class="color-column">
         <button
           mat-raised-button
-          [ngClass]="{ selected: currentColor === 'purple' }"
+          [ngClass]="{ selectedColor: currentColor === 'purple' }"
           class="purple"
           (click)="setColor('purple')"
         ></button>
         <button
           mat-raised-button
-          [ngClass]="{ selected: currentColor === 'plum' }"
+          [ngClass]="{ selectedColor: currentColor === 'plum' }"
           class="plum"
           (click)="setColor('plum')"
         ></button>
@@ -238,14 +238,15 @@
   </div>
 </div>
 <div class="container">
-  <canvas
-    class="canvas"
-    id="canvas"
-    #canvas
-    [style.border]="'2px solid black'"
-    width="1200"
-    height="600"
-  ></canvas>
+  <div class="canvas-container">
+    <canvas
+      class="canvas"
+      id="canvas"
+      [style.border]="'2px solid black'"
+      width="1200"
+      height="600"
+    ></canvas>
+  </div>
   <button
     mat-raised-button
     class="download-button"
