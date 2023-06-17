@@ -5,7 +5,7 @@
       <mat-icon class="big-icon" svgIcon="clipboard"></mat-icon>
     </button>
     <div>
-      <button mat-raised-button class="basic-button">
+      <button mat-raised-button (click)="cut()" class="basic-button">
         <mat-icon class="icon" svgIcon="scissors"></mat-icon>
       </button>
       <button mat-raised-button (click)="copy()" class="basic-button">
@@ -226,7 +226,7 @@
   </div>
 </div>
 <div class="container">
-  <div class="canvas-container">
+  <div class="canvas-container"(contextmenu)="onRightClick($event)">
     <canvas
       class="canvas"
       id="canvas"

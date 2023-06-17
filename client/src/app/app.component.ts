@@ -1,8 +1,5 @@
 import {
   Component,
-  ElementRef,
-  ViewChild,
-  Inject,
   HostListener,
 } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
@@ -55,15 +52,29 @@ export class AppComponent {
   }
 
   ngOnInit() {
+    // Create a new Fabric.js canvas with the ID 'canvas' and enable object stacking preservation
     this.fabricCanvas = new fabric.Canvas('canvas', {
       preserveObjectStacking: true,
     });
+
+    // Set the current tool to the pencil tool
     this.setTool(Tool.pencil);
+
+    // Add a mouse down event listener to the canvas
+    this.fabricCanvas.on('mouse:down', (event) => {
+      if (this.currentTool == Tool.magnifier) {
+        // Perform zooming using the doZoom method with the event coordinates
+        this.doZoom(event.e);
+      }
+    });
+
+    this.fabricCanvas.renderAll();
   }
 
   setTool(tool: Tool) {
     this.currentTool = tool;
     switch (this.currentTool) {
+      //72107
       case Tool.pencil: {
         this.fabricCanvas.selection = false;
         this.fabricCanvas.isDrawingMode = true;
@@ -71,9 +82,13 @@ export class AppComponent {
         this.fabricCanvas.freeDrawingBrush.color = this.currentColor;
         break;
       }
+      //72059
       case Tool.selector: {
+        this.fabricCanvas.isDrawingMode = false;
+        this.fabricCanvas.selection = true;
         break;
       }
+      //72107
       case Tool.eraser: {
         this.fabricCanvas.selection = false;
         this.fabricCanvas.isDrawingMode = true; // Enable drawing mode
@@ -87,6 +102,7 @@ export class AppComponent {
       case Tool.type: {
         break;
       }
+      //72107
       case Tool.highlighter: {
         this.fabricCanvas.selection = false;
         this.fabricCanvas.isDrawingMode = true;
@@ -94,9 +110,11 @@ export class AppComponent {
         this.fabricCanvas.freeDrawingBrush.color = this.setColorWithOpacity();
         break;
       }
+      //72059
       case Tool.pen: {
         break;
       }
+      //72059
       case Tool.magnifier:
         this.fabricCanvas.isDrawingMode = false;
     }
@@ -176,6 +194,7 @@ export class AppComponent {
     });
   }
 
+
   enableColorPicker() {
     this.lastTool = this.currentTool;
     this.currentTool = Tool.colorPicker;
@@ -194,6 +213,71 @@ export class AppComponent {
     }
   };
 
+  //72059
+
+  cut(): void {
+    // Get the currently active objects on the canvas
+    const activeObjects = this.fabricCanvas.getActiveObjects();
+
+    // Check if there are any active objects
+    if (activeObjects) {
+      const clonedObjects: fabric.Object[] = [];
+
+      // Iterate over each active object
+      activeObjects.forEach((obj: fabric.Object) => {
+        // Clone each object and add the cloned version to the array
+        obj.clone((cloned: fabric.Object) => {
+          clonedObjects.push(cloned);
+        });
+
+        // Remove the original object from the canvas
+        this.fabricCanvas.remove(obj);
+      });
+
+      // Create a new active selection with the cloned objects
+      this.clipboard = new fabric.ActiveSelection(clonedObjects, {
+        canvas: this.fabricCanvas,
+      });
+      
+      this.fabricCanvas.renderAll();
+    }
+  }
+
+  @HostListener('contextmenu', ['$event'])
+  onRightClick(event: MouseEvent) {
+    // Prevent the default context menu from appearing
+    event.preventDefault();
+    if (this.currentTool == Tool.magnifier) {
+      // Call the doZoom() method if the current tool is the magnifier
+      this.doZoom(event);
+    }
+  }
+
+  doZoom(event: MouseEvent) {
+    var zoom: number;
+    if (event.button == 2) {
+      // Right button pressed
+      zoom = -0.1;
+    } else if (event.button == 0) {
+      // Left button pressed
+      zoom = 0.1;
+    } else {
+      // Other buttons are pressed
+      zoom = 0;
+    }
+
+    // Get the mouse pointer position relative to the canvas
+    const pointer = this.fabricCanvas.getPointer(event);
+    const zoomX = pointer.x;
+    const zoomY = pointer.y;
+
+    // Zoom to the specified point.
+    this.fabricCanvas.zoomToPoint(
+      { x: zoomX, y: zoomY },
+      this.fabricCanvas.getZoom() + zoom
+    );
+  }
+
   setColor(color: string) {
     this.currentColor = color;
     this.setTool(this.currentTool);
@@ -203,6 +287,8 @@ export class AppComponent {
     this.fabricCanvas.clear();
     this.fabricCanvas.backgroundColor = 'white';
   }
+
+  // 72054
 
   downloadCanvas() {
     let canvas = <HTMLCanvasElement>document.getElementById('canvas');
