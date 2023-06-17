@@ -11,12 +11,14 @@ import { Tool } from './common/Tool';
 })
 export class AppComponent {
   fabricCanvas!: fabric.Canvas;
-  lastTool!: Tool;
-  PaintTool = Tool;
+  lastTool!: Tool; //containts the value of the last tool before the current
+  PaintTool = Tool; //used for enum access in html
   currentColor: string = 'black';
   currentTool: Tool = Tool.pencil;
   selectedArrowTool: Tool = Tool.pen;
-  clipboard!: fabric.Object;
+  clipboard!: fabric.Object; // contains last copied or cut object(empty if none is done)
+
+  //contains icon names and their location
   icons = [
     { name: 'bucket', path: '../assets/bucket.svg' },
     { name: 'highlighter', path: '../assets/highlighter.svg' },
@@ -63,35 +65,22 @@ export class AppComponent {
         // Perform zooming using the doZoom method with the event coordinates
         this.doZoom(event.e);
       } else if (this.currentTool == Tool.bucket) {
+        //72059
         if (event.target && event.target instanceof fabric.Object) {
           const targetObject = event.target as fabric.Object;
-          const fillColor = this.currentColor; // Replace with your desired fill color
+          const fillColor = this.currentColor;
 
           targetObject.set('fill', fillColor);
           this.fabricCanvas.renderAll();
         }
       } else if (this.currentTool == Tool.type) {
+        //72107
         this.insertTextBox(event.e);
         this.setTool(Tool.selector);
       }
     });
 
     this.fabricCanvas.renderAll();
-  }
-
-  insertTextBox(event: MouseEvent) {
-    const pointer = this.fabricCanvas.getPointer(event);
-    const textX = pointer.x;
-    const textY = pointer.y;
-
-    const textbox = new fabric.Textbox('Enter text here', {
-      left: textX,
-      top: textY,
-      width: 200,
-      fontSize: 16,
-    });
-
-    this.fabricCanvas.add(textbox);
   }
 
   setTool(tool: Tool) {
@@ -112,6 +101,7 @@ export class AppComponent {
         this.fabricCanvas.selection = true;
         break;
       }
+      //72107
       case Tool.colorPicker: {
         this.fabricCanvas.isDrawingMode = false;
         break;
@@ -124,10 +114,12 @@ export class AppComponent {
         this.fabricCanvas.freeDrawingBrush.width = 10; // Set brush width as needed
         break;
       }
+      //72059
       case Tool.bucket: {
         this.fabricCanvas.isDrawingMode = false;
         break;
       }
+      //72107
       case Tool.type: {
         this.fabricCanvas.isDrawingMode = false;
         break;
@@ -154,15 +146,7 @@ export class AppComponent {
     }
   }
 
-  paintBucket(): void {
-    const selectedObject = this.fabricCanvas.getActiveObject();
-    if (selectedObject) {
-      const newColor = 'blue'; // Replace with your desired color
-      selectedObject.set('fill', newColor);
-      this.fabricCanvas.renderAll();
-    }
-  }
-
+  //72107
   private setColorWithOpacity(): string {
     const opacity = 0.4;
     switch (this.currentColor) {
@@ -253,6 +237,21 @@ export class AppComponent {
     }
   };
 
+  insertTextBox(event: MouseEvent) {
+    const pointer = this.fabricCanvas.getPointer(event);
+    const textX = pointer.x;
+    const textY = pointer.y;
+
+    const textbox = new fabric.Textbox('Text', {
+      left: textX,
+      top: textY,
+      width: 200,
+      fontSize: 16,
+    });
+
+    this.fabricCanvas.add(textbox);
+  }
+
   //72059
 
   cut(): void {
@@ -316,6 +315,15 @@ export class AppComponent {
       { x: zoomX, y: zoomY },
       this.fabricCanvas.getZoom() + zoom
     );
+  }
+
+  paintBucket(): void {
+    const selectedObject = this.fabricCanvas.getActiveObject();
+    if (selectedObject) {
+      const newColor = 'blue'; // Replace with your desired color
+      selectedObject.set('fill', newColor);
+      this.fabricCanvas.renderAll();
+    }
   }
 
   setColor(color: string) {
