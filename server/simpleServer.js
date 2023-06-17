@@ -35,25 +35,9 @@ const upload = multer({
 router.post("/upload", upload.single("file"), (context) => {
   context.body = {
     message: `file ${context.request.file.filename} has been saved on the server`,
-    url: `http://localhost:${serverPort}/${context.request.file.originalname}`,
+    url: context.request.file.filename,
   };
 });
-
-// router.post("/upload", upload.single("file"), (context) => {
-//   const response = {
-//     success: false,
-//     message: ""
-//   };
-
-//   if (context.request.file) {
-//     response.success = true;
-//     response.message = `File ${context.request.file.filename} has been saved on the server`;
-//   } else {
-//     response.message = "File upload failed";
-//   }
-
-//   context.body = response;
-// });
 
 const fs = require("fs");
 
