@@ -88,6 +88,10 @@ export class AppComponent {
         break;
       }
       case Tool.highlighter: {
+        this.fabricCanvas.selection = false;
+        this.fabricCanvas.isDrawingMode = true;
+        this.fabricCanvas.freeDrawingBrush.width = 10;
+        this.fabricCanvas.freeDrawingBrush.color = this.setColorWithOpacity();
         break;
       }
       case Tool.pen: {
@@ -95,6 +99,42 @@ export class AppComponent {
       }
       case Tool.magnifier:
         this.fabricCanvas.isDrawingMode = false;
+    }
+  }
+
+  private setColorWithOpacity(): string {
+    const opacity = 0.4;
+    switch (this.currentColor) {
+      case 'white':
+        return `rgba(255,255,255, ${opacity})`;
+      case 'black':
+        return `rgba(0,0,0, ${opacity})`;
+      case 'lightgrey':
+        return `rgba(211, 211, 211, ${opacity})`;
+      case 'brown':
+        return `rgba(150, 75, 0, ${opacity})`;
+      case 'red':
+        return `rgba(255,0,0, ${opacity})`;
+      case 'deeppink':
+        return `rgba(255,20,147, ${opacity})`;
+      case 'yellow':
+        return `rgba(255,255,0, ${opacity})`;
+      case 'orange':
+        return `rgba(255, 165, 0, ${opacity})`;
+      case 'green':
+        return `rgba(0,255,0, ${opacity})`;
+      case 'lightgreen':
+        return `rgba(144, 238, 144, ${opacity})`;
+      case 'blue':
+        return `rgba(0, 0, 255, ${opacity})`;
+      case 'turquoise':
+        return `rgba(48,213,200, ${opacity})`;
+      case 'purple':
+        return `rgba(160, 32, 240, ${opacity})`;
+      case 'plum':
+        return `rgba(221, 160, 221, ${opacity})`;
+      default:
+        return `rgba(0,0,0, ${opacity})`;
     }
   }
 
@@ -156,7 +196,7 @@ export class AppComponent {
 
   setColor(color: string) {
     this.currentColor = color;
-    this.fabricCanvas.freeDrawingBrush.color = color;
+    this.setTool(this.currentTool);
   }
 
   clear() {
