@@ -112,6 +112,10 @@ export class AppComponent {
       }
       //72059
       case Tool.pen: {
+        this.fabricCanvas.selection = false;
+        this.fabricCanvas.isDrawingMode = true;
+        this.fabricCanvas.freeDrawingBrush.color = this.currentColor;
+        this.fabricCanvas.freeDrawingBrush.width = 15;
         break;
       }
       //72059
