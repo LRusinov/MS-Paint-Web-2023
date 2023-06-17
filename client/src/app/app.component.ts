@@ -70,12 +70,32 @@ export class AppComponent {
           targetObject.set('fill', fillColor);
           this.fabricCanvas.renderAll();
         }
+      } else if (this.currentTool == Tool.type) {
+        this.insertTextBox(event.e);
+        this.setTool(Tool.selector);
       }
     });
+
     this.fabricCanvas.renderAll();
   }
 
+  insertTextBox(event: MouseEvent) {
+    const pointer = this.fabricCanvas.getPointer(event);
+    const textX = pointer.x;
+    const textY = pointer.y;
+
+    const textbox = new fabric.Textbox('Enter text here', {
+      left: textX,
+      top: textY,
+      width: 200,
+      fontSize: 16,
+    });
+
+    this.fabricCanvas.add(textbox);
+  }
+
   setTool(tool: Tool) {
+    this.lastTool = this.currentTool;
     this.currentTool = tool;
     switch (this.currentTool) {
       //72107
@@ -92,6 +112,10 @@ export class AppComponent {
         this.fabricCanvas.selection = true;
         break;
       }
+      case Tool.colorPicker: {
+        this.fabricCanvas.isDrawingMode = false;
+        break;
+      }
       //72107
       case Tool.eraser: {
         this.fabricCanvas.selection = false;
@@ -105,6 +129,7 @@ export class AppComponent {
         break;
       }
       case Tool.type: {
+        this.fabricCanvas.isDrawingMode = false;
         break;
       }
       //72107
@@ -213,9 +238,7 @@ export class AppComponent {
   }
 
   enableColorPicker() {
-    this.lastTool = this.currentTool;
-    this.currentTool = Tool.colorPicker;
-
+    this.setTool(Tool.colorPicker);
     this.fabricCanvas.on('mouse:down', this.pickColor);
   }
 
