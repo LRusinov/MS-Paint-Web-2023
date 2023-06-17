@@ -226,7 +226,7 @@
   </div>
 </div>
 <div class="container">
-  <div class="canvas-container"(contextmenu)="onRightClick($event)">
+  <div class="canvas-container" (contextmenu)="onRightClick($event)">
     <canvas
       class="canvas"
       id="canvas"
@@ -242,5 +242,19 @@
     (click)="downloadCanvas()"
   >
     Download
+  </button>
+  <button
+    mat-raised-button
+    class="download-button"
+    (click)="downloadCanvas()"
+  >
+    Choose file
+  </button>
+  <button
+    mat-raised-button
+    class="download-button"
+    (click)="downloadCanvas()"
+  >
+    Upload
   </button>
 </div>
