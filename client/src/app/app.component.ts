@@ -1,7 +1,4 @@
-import {
-  Component,
-  HostListener,
-} from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { fabric } from 'fabric';
@@ -65,9 +62,16 @@ export class AppComponent {
       if (this.currentTool == Tool.magnifier) {
         // Perform zooming using the doZoom method with the event coordinates
         this.doZoom(event.e);
+      } else if (this.currentTool == Tool.bucket) {
+        if (event.target && event.target instanceof fabric.Object) {
+          const targetObject = event.target as fabric.Object;
+          const fillColor = this.currentColor; // Replace with your desired fill color
+
+          targetObject.set('fill', fillColor);
+          this.fabricCanvas.renderAll();
+        }
       }
     });
-
     this.fabricCanvas.renderAll();
   }
 
@@ -97,6 +101,7 @@ export class AppComponent {
         break;
       }
       case Tool.bucket: {
+        this.fabricCanvas.isDrawingMode = false;
         break;
       }
       case Tool.type: {
@@ -121,6 +126,15 @@ export class AppComponent {
       //72059
       case Tool.magnifier:
         this.fabricCanvas.isDrawingMode = false;
+    }
+  }
+
+  paintBucket(): void {
+    const selectedObject = this.fabricCanvas.getActiveObject();
+    if (selectedObject) {
+      const newColor = 'blue'; // Replace with your desired color
+      selectedObject.set('fill', newColor);
+      this.fabricCanvas.renderAll();
     }
   }
 
@@ -198,7 +212,6 @@ export class AppComponent {
     });
   }
 
-
   enableColorPicker() {
     this.lastTool = this.currentTool;
     this.currentTool = Tool.colorPicker;
@@ -242,7 +255,7 @@ export class AppComponent {
       this.clipboard = new fabric.ActiveSelection(clonedObjects, {
         canvas: this.fabricCanvas,
       });
-      
+
       this.fabricCanvas.renderAll();
     }
   }
