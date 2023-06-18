@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,6 +21,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     HttpClientModule,
     MatMenuModule,
     MatButtonToggleModule,
+    MatTooltipModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
