@@ -54,6 +54,7 @@ export class AppComponent {
     // Create a new Fabric.js canvas with the ID 'canvas' and enable object stacking preservation
     this.fabricCanvas = new fabric.Canvas('canvas', {
       preserveObjectStacking: true,
+      backgroundColor: 'white',
     });
 
     // Set the current tool to the pencil tool
