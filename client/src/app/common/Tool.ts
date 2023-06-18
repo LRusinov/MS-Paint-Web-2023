@@ -6,6 +6,6 @@ export enum Tool {
   selector,
   colorPicker,
   eraser,
-  type,
+  text,
   highlighter,
 }
