@@ -349,4 +349,28 @@ export class AppComponent {
     createEl.click();
     createEl.remove();
   }
+
+  uploadCanvas(event: any) {
+    let canvas = this.fabricCanvas;
+    let context = canvas.getContext();
+    context?.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+
+    var render = new FileReader();
+    render.onload = function(event) {
+      var img = new Image();
+      img!.src! = event!.target!.result?.toString()!;
+      img.onload = function() {
+        var fabricImg = new fabric.Image(img);
+        fabricImg.set({
+          height: img.height,
+          width: img.width,
+        })
+        
+        canvas.centerObject(fabricImg);
+        canvas.add(fabricImg);
+        canvas.renderAll();
+      };     
+    };
+    render.readAsDataURL(event.target.files[0]);
+  }
 }

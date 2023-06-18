@@ -245,16 +245,11 @@
   </button>
   <button
     mat-raised-button
-    class="download-button"
-    (click)="downloadCanvas()"
-  >
-    Choose file
-  </button>
-  <button
-    mat-raised-button
-    class="download-button"
-    (click)="downloadCanvas()"
+    class="upload-button"
+    id="upload"
   >
     Upload
   </button>
+  <input type="file" (change)="uploadCanvas($event)" accept="image/*">
+  
 </div>

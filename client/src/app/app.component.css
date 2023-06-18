@@ -167,6 +167,11 @@ button.plum {
   color: white !important;
 }
 
+.upload-button  {
+  background-color: #3f51b5 !important;
+  color: white !important;
+}
+
 .element.style{
     border: none!important;
 }
