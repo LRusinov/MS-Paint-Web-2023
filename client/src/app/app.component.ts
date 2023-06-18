@@ -32,7 +32,7 @@ export class AppComponent {
     { name: 'selection', path: '../assets/selection.svg' },
     { name: 'pen', path: '../assets/pen.svg' },
     { name: 'magnifier', path: '../assets/magnifier.svg' },
-    { name: 'type', path: '../assets/type.svg' },
+    { name: 'text', path: '../assets/text.svg' },
     { name: 'scissors', path: '../assets/scissors.svg' },
     { name: 'clipboard', path: '../assets/clipboard.svg' },
     { name: 'copy', path: '../assets/copy.svg' },
@@ -77,8 +77,9 @@ export class AppComponent {
           targetObject.set('fill', fillColor);
         }
       //72107
-      } else if (this.currentTool == Tool.type) {
+      } else if (this.currentTool == Tool.text) {
         // Insert a text box at the event coordinates
+
         this.insertTextBox(event.e);
         // Set the current tool to the selector
         this.setTool(Tool.selector);
@@ -125,7 +126,7 @@ export class AppComponent {
         break;
       }
       //72107
-      case Tool.type: {
+      case Tool.text: {
         this.fabricCanvas.isDrawingMode = false;
         break;
       }

@@ -5,20 +5,36 @@
 </head>
 <div class="toolbar">
   <div class="row">
-    <button mat-raised-button (click)="paste()" class="big-button">
+    <button
+      mat-raised-button
+      matTooltip="Paste"
+      (click)="paste()"
+      class="big-button"
+    >
       <mat-icon class="big-icon" svgIcon="clipboard"></mat-icon>
     </button>
     <div>
-      <button mat-raised-button (click)="cut()" class="basic-button">
+      <button
+        mat-raised-button
+        matTooltip="Cut"
+        (click)="cut()"
+        class="basic-button"
+      >
         <mat-icon class="icon" svgIcon="scissors"></mat-icon>
       </button>
-      <button mat-raised-button (click)="copy()" class="basic-button">
+      <button
+        mat-raised-button
+        matTooltip="Copy"
+        (click)="copy()"
+        class="basic-button"
+      >
         <mat-icon class="icon" svgIcon="copy"></mat-icon>
       </button>
     </div>
     <div class="row">
       <button
         mat-raised-button
+        matTooltip="Select"
         [ngClass]="{ selectedTool: currentTool === PaintTool.selector }"
         (click)="setTool(PaintTool.selector)"
         class="big-button"
@@ -29,6 +45,7 @@
     <div>
       <button
         mat-raised-button
+        matTooltip="Pencil"
         [ngClass]="{ selectedTool: currentTool === PaintTool.pencil }"
         (click)="setTool(PaintTool.pencil)"
         class="basic-button"
@@ -37,6 +54,7 @@
       </button>
       <button
         mat-raised-button
+        matTooltip="Eraser"
         [ngClass]="{ selectedTool: currentTool === PaintTool.eraser }"
         (click)="setTool(PaintTool.eraser)"
         class="basic-button"
@@ -47,6 +65,7 @@
     <div>
       <button
         mat-raised-button
+        matTooltip="Bucket"
         [ngClass]="{ selectedTool: currentTool === PaintTool.bucket }"
         (click)="setTool(PaintTool.bucket)"
         class="basic-button"
@@ -55,6 +74,7 @@
       </button>
       <button
         mat-raised-button
+        matTooltip="Color picker"
         [ngClass]="{ selectedTool: currentTool === PaintTool.colorPicker }"
         (click)="enableColorPicker()"
         class="basic-button"
@@ -65,14 +85,16 @@
     <div>
       <button
         mat-raised-button
-        [ngClass]="{ selectedTool: currentTool === PaintTool.type }"
-        (click)="setTool(PaintTool.type)"
+        matTooltip="Text"
+        [ngClass]="{ selectedTool: currentTool === PaintTool.text }"
+        (click)="setTool(PaintTool.text)"
         class="basic-button"
       >
-        <mat-icon class="icon" svgIcon="type"></mat-icon>
+        <mat-icon class="icon" svgIcon="text"></mat-icon>
       </button>
       <button
         mat-raised-button
+        matTooltip="Magnifier"
         [ngClass]="{ selectedTool: currentTool === PaintTool.magnifier }"
         (click)="setTool(PaintTool.magnifier)"
         class="basic-button"
@@ -84,6 +106,7 @@
       <ng-container [ngSwitch]="selectedArrowTool">
         <button
           mat-raised-button
+          matTooltip="Marker pen"
           [ngClass]="{ selectedTool: currentTool === PaintTool.pen }"
           (click)="setTool(PaintTool.pen)"
           *ngSwitchCase="PaintTool.pen"
@@ -93,6 +116,7 @@
         </button>
         <button
           mat-raised-button
+          matTooltip="Highlighter"
           [ngClass]="{ selectedTool: currentTool === PaintTool.highlighter }"
           (click)="setTool(PaintTool.highlighter)"
           *ngSwitchCase="PaintTool.highlighter"
@@ -130,12 +154,14 @@
       <div class="color-column">
         <button
           mat-raised-button
+          matTooltip="Black"
           [ngClass]="{ selectedColor: currentColor === 'black' }"
           class="black"
           (click)="setColor('black')"
         ></button>
         <button
           mat-raised-button
+          matTooltip="White"
           [ngClass]="{ selectedColor: currentColor === 'white' }"
           class="white"
           (click)="setColor('white')"
@@ -144,12 +170,14 @@
       <div class="color-column">
         <button
           mat-raised-button
+          matTooltip="Lightgrey"
           [ngClass]="{ selectedColor: currentColor === 'lightgrey' }"
           class="lightgrey"
           (click)="setColor('lightgrey')"
         ></button>
         <button
           mat-raised-button
+          matTooltip="Brown"
           [ngClass]="{ selectedColor: currentColor === 'brown' }"
           class="brown"
           (click)="setColor('brown')"
@@ -158,12 +186,14 @@
       <div class="color-column">
         <button
           mat-raised-button
+          matTooltip="Red"
           [ngClass]="{ selectedColor: currentColor === 'red' }"
           class="red"
           (click)="setColor('red')"
         ></button>
         <button
           mat-raised-button
+          matTooltip="Deeppink"
           [ngClass]="{ selectedColor: currentColor === 'deeppink' }"
           class="deeppink"
           (click)="setColor('deeppink')"
@@ -172,12 +202,14 @@
       <div class="color-column">
         <button
           mat-raised-button
+          matTooltip="Yellow"
           [ngClass]="{ selectedColor: currentColor === 'yellow' }"
           class="yellow"
           (click)="setColor('yellow')"
         ></button>
         <button
           mat-raised-button
+          matTooltip="Orange"
           [ngClass]="{ selectedColor: currentColor === 'orange' }"
           class="orange"
           (click)="setColor('orange')"
@@ -186,12 +218,14 @@
       <div class="color-column">
         <button
           mat-raised-button
+          matTooltip="Green"
           [ngClass]="{ selectedColor: currentColor === 'green' }"
           class="green"
           (click)="setColor('green')"
         ></button>
         <button
           mat-raised-button
+          matTooltip="Lightgreen"
           [ngClass]="{ selectedColor: currentColor === 'lightgreen' }"
           class="lightgreen"
           (click)="setColor('lightgreen')"
@@ -200,12 +234,14 @@
       <div class="color-column">
         <button
           mat-raised-button
+          matTooltip="Blue"
           [ngClass]="{ selectedColor: currentColor === 'blue' }"
           class="blue"
           (click)="setColor('blue')"
         ></button>
         <button
           mat-raised-button
+          matTooltip="Turquoise"
           [ngClass]="{ selectedColor: currentColor === 'turquoise' }"
           class="turquoise"
           (click)="setColor('turquoise')"
@@ -214,12 +250,14 @@
       <div class="color-column">
         <button
           mat-raised-button
+          matTooltip="Purple"
           [ngClass]="{ selectedColor: currentColor === 'purple' }"
           class="purple"
           (click)="setColor('purple')"
         ></button>
         <button
           mat-raised-button
+          matTooltip="Plum"
           [ngClass]="{ selectedColor: currentColor === 'plum' }"
           class="plum"
           (click)="setColor('plum')"
@@ -239,21 +277,22 @@
       height="600"
     ></canvas>
   </div>
-  <button
-    mat-raised-button
-    class="download-button"
-    id="download"
-    (click)="downloadCanvas()"
-  >
-    Download
-  </button>
-  <button
-    mat-raised-button
-    class="upload-button"
-    id="upload"
-  >
-    Upload
-  </button>
-  <input type="file" id="fileInput" (change)="uploadCanvas($event)" accept="image/*">
-  
+  <div class="server-buttons-container">
+    <input
+      class="choose-file-button"
+      type="file"
+      id="fileInput"
+      (change)="uploadCanvas($event)"
+      accept="image/*"
+    />
+    <button
+      mat-raised-button
+      class="server-button"
+      id="download"
+      (click)="downloadCanvas()"
+    >
+      Download
+    </button>
+    <button mat-raised-button class="server-button" id="upload">Upload</button>
+  </div>
 </div>
