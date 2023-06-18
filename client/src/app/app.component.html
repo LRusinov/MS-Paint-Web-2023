@@ -1,4 +1,8 @@
 <router-outlet></router-outlet>
+<head>
+  <title>Cloud Paint</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
 <div class="toolbar">
   <div class="row">
     <button mat-raised-button (click)="paste()" class="big-button">
@@ -250,6 +254,6 @@
   >
     Upload
   </button>
-  <input type="file" (change)="uploadCanvas($event)" accept="image/*">
+  <input type="file" id="fileInput" (change)="uploadCanvas($event)" accept="image/*">
   
 </div>

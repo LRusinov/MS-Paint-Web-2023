@@ -3,6 +3,7 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { fabric } from 'fabric';
 import { Tool } from './common/Tool';
+import * as $ from "jquery";
 
 @Component({
   selector: 'app-root',
@@ -338,7 +339,6 @@ export class AppComponent {
   }
 
   // 72054
-
   downloadCanvas() {
     let canvas = <HTMLCanvasElement>document.getElementById('canvas');
     let canvasUrl = canvas.toDataURL('image/png', 0.5);
@@ -350,27 +350,69 @@ export class AppComponent {
     createEl.remove();
   }
 
-  uploadCanvas(event: any) {
-    let canvas = this.fabricCanvas;
-    let context = canvas.getContext();
-    context?.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+  // uploadCanvas(event: any) {
+  //   let canvas = this.fabricCanvas;
+  //   let context = canvas.getContext();
+  //   context?.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
-    var render = new FileReader();
-    render.onload = function(event) {
-      var img = new Image();
-      img!.src! = event!.target!.result?.toString()!;
-      img.onload = function() {
-        var fabricImg = new fabric.Image(img);
-        fabricImg.set({
-          height: img.height,
-          width: img.width,
-        })
+  //   var render = new FileReader();
+  //   render.onload = function(event) {
+  //     var img = new Image();
+  //     img!.src! = event!.target!.result?.toString()!;
+  //     img.onload = function() {
+  //       var fabricImg = new fabric.Image(img);
+  //       fabricImg.set({
+  //         height: img.height,
+  //         width: img.width,
+  //       })
         
-        canvas.centerObject(fabricImg);
-        canvas.add(fabricImg);
-        canvas.renderAll();
-      };     
-    };
-    render.readAsDataURL(event.target.files[0]);
+  //       canvas.centerObject(fabricImg);
+  //       canvas.add(fabricImg);
+  //       canvas.renderAll();
+  //     };     
+  //   };
+  //   render.readAsDataURL(event.target.files[0]);
+  // }
+
+  uploadCanvas(event: any) {
+    const canvas = this.fabricCanvas;
+    const context = canvas.getContext();
+    context?.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+  
+    const fileInput = <HTMLInputElement> document.getElementById('fileInput');
+    const file = fileInput!.files![0];
+    const formData = new FormData();
+    formData.append('file', file);
+  
+    $.ajax({
+      url: 'http://localhost:2115/upload',
+      type: 'POST',
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function (response) {
+        alert('Upload successful');
+        console.log('Response:', response);
+  
+        const img = new Image();
+        img.src = URL.createObjectURL(file);
+        img.onload = function() {
+          const fabricImg = new fabric.Image(img);
+          fabricImg.set({
+            height: img.height,
+            width: img.width,
+          });
+  
+          canvas.centerObject(fabricImg);
+          canvas.add(fabricImg);
+          canvas.renderAll();
+        };
+      },
+      error: function (xhr, status, error) {
+        alert('Upload failed');
+        console.error('Error:', error);
+      }
+    });
   }
+  
 }
