@@ -63,21 +63,24 @@ export class AppComponent {
 
     // Add a mouse down event listener to the canvas
     this.fabricCanvas.on('mouse:down', (event) => {
+      //72059
       if (this.currentTool == Tool.magnifier) {
         // Perform zooming using the doZoom method with the event coordinates
         this.doZoom(event.e);
       } else if (this.currentTool == Tool.bucket) {
-        //72059
+        // Check if the event has a target object and if it's an instance of fabric Object
         if (event.target && event.target instanceof fabric.Object) {
           const targetObject = event.target as fabric.Object;
           const fillColor = this.currentColor;
 
+          // Set the fill color of the target object
           targetObject.set('fill', fillColor);
-          this.fabricCanvas.renderAll();
         }
+      //72107
       } else if (this.currentTool == Tool.type) {
-        //72107
+        // Insert a text box at the event coordinates
         this.insertTextBox(event.e);
+        // Set the current tool to the selector
         this.setTool(Tool.selector);
       }
     });
@@ -148,7 +151,7 @@ export class AppComponent {
     }
   }
 
-  //72107
+  //-------------------------------------------------------72107-----------------------------------------------------------
   private setColorWithOpacity(): string {
     const opacity = 0.4;
     switch (this.currentColor) {
@@ -254,7 +257,7 @@ export class AppComponent {
     this.fabricCanvas.add(textbox);
   }
 
-  //72059
+    //-------------------------------------------------------72059-----------------------------------------------------------
 
   cut(): void {
     // Get the currently active objects on the canvas
@@ -319,15 +322,6 @@ export class AppComponent {
     );
   }
 
-  paintBucket(): void {
-    const selectedObject = this.fabricCanvas.getActiveObject();
-    if (selectedObject) {
-      const newColor = 'blue'; // Replace with your desired color
-      selectedObject.set('fill', newColor);
-      this.fabricCanvas.renderAll();
-    }
-  }
-
   setColor(color: string) {
     this.currentColor = color;
     this.setTool(this.currentTool);
@@ -338,7 +332,7 @@ export class AppComponent {
     this.fabricCanvas.backgroundColor = 'white';
   }
 
-  // 72054
+    //-------------------------------------------------------72054-----------------------------------------------------------
   downloadCanvas() {
     let canvas = <HTMLCanvasElement>document.getElementById('canvas');
     let canvasUrl = canvas.toDataURL('image/png', 0.5);
