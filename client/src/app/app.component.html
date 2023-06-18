@@ -277,19 +277,22 @@
       height="600"
     ></canvas>
   </div>
-  <button
-    mat-raised-button
-    class="download-button"
-    id="download"
-    (click)="downloadCanvas()"
-  >
-    Download
-  </button>
-  <button mat-raised-button class="upload-button" id="upload">Upload</button>
-  <input
-    type="file"
-    id="fileInput"
-    (change)="uploadCanvas($event)"
-    accept="image/*"
-  />
+  <div class="server-buttons-container">
+    <input
+      class="choose-file-button"
+      type="file"
+      id="fileInput"
+      (change)="uploadCanvas($event)"
+      accept="image/*"
+    />
+    <button
+      mat-raised-button
+      class="server-button"
+      id="download"
+      (click)="downloadCanvas()"
+    >
+      Download
+    </button>
+    <button mat-raised-button class="server-button" id="upload">Upload</button>
+  </div>
 </div>
