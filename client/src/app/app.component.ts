@@ -353,17 +353,17 @@ export class AppComponent {
       formData.append('file', blob!, "file.png");
   
       $.ajax({
-        url: 'http://localhost:2115/upload',
+        url: 'http://localhost:2115/editedImages',
         type: 'POST',
         data: formData,
         processData: false,
         contentType: false,
         success: function (response) {
-          alert('Upload successful');
+          alert('Image saved on server succesfully!');
           console.log('Response:', response);
         },
         error: function (xhr, status, error) {
-          alert('Upload failed');
+          alert('File could not be saved on the server.');
           console.error('Error:', error);
         }
       });
