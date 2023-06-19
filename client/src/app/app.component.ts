@@ -346,69 +346,28 @@ export class AppComponent {
     createEl.remove();
   }
 
-  /* uploadCanvas(event: any) {
-    let canvas = this.fabricCanvas;
-    let context = canvas.getContext();
-    context?.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-
-    var render = new FileReader();
-    render.onload = function(event) {
-      var img = new Image();
-      img!.src! = event!.target!.result?.toString()!;
-      img.onload = function() {
-        var fabricImg = new fabric.Image(img);
-        fabricImg.set({
-          height: img.height,
-          width: img.width,
-        })
-        
-        canvas.centerObject(fabricImg);
-        canvas.add(fabricImg);
-        canvas.renderAll();
-      };     
-    };
-    render.readAsDataURL(event.target.files[0]);
-  } */
   uploadCanvasButton() {
-    this.fabricCanvas.renderAll();
-    let canvas = new fabric.Canvas(<HTMLCanvasElement>document.getElementById('canvas'));
-    let imageData = canvas.toDataURL();
-
-    const fileInput = <HTMLInputElement> document.getElementById('uploadButton');
-    const file = fileInput!.files![0];
-    const formData = new FormData();
-    formData.append('file', imageData);
+    let canvas = <HTMLCanvasElement>document.getElementById('canvas');
+    canvas.toBlob(function(blob) {
+      const formData = new FormData();
+      formData.append('file', blob!, "file.png");
   
-    $.ajax({
-      url: 'http://localhost:2115/upload',
-      type: 'POST',
-      data: formData,
-      processData: false,
-      contentType: false,
-      success: function (response) {
-        alert('Upload successful');
-        console.log('Response:', response);
-  
-        const img = new Image();
-        img.src = URL.createObjectURL(file);
-        img.onload = function() {
-          const fabricImg = new fabric.Image(img);
-          fabricImg.set({
-            height: img.height,
-            width: img.width,
-          });
-  
-          canvas.centerObject(fabricImg);
-          canvas.add(fabricImg);
-          canvas.renderAll();
-        };
-      },
-      error: function (xhr, status, error) {
-        alert('Upload failed');
-        console.error('Error:', error);
-      }
+      $.ajax({
+        url: 'http://localhost:2115/upload',
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (response) {
+          alert('Upload successful');
+          console.log('Response:', response);
+        },
+        error: function (xhr, status, error) {
+          alert('Upload failed');
+          console.error('Error:', error);
+        }
+      });
     });
-    this.fabricCanvas.renderAll();
   }
 
   uploadCanvas(event: any) {
@@ -450,7 +409,7 @@ export class AppComponent {
         console.error('Error:', error);
       }
     });
-    this.fabricCanvas.renderAll();
+    //this.fabricCanvas.renderAll();
   }
   
 }
