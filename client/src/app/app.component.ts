@@ -370,6 +370,20 @@ export class AppComponent {
     });
   }
 
+  uploadCanvasHelper(file: File, canvas: fabric.Canvas) {
+    const img = new Image();
+    img.src = URL.createObjectURL(file);
+    img.onload = function() {
+      const fabricImg = new fabric.Image(img);
+      fabricImg.set({
+        height: img.height,
+        width: img.width,
+      });
+
+      canvas.centerObject(fabricImg);
+      canvas.add(fabricImg);
+    }
+  }
   uploadCanvas(event: any) {
     const canvas = this.fabricCanvas;
     const context = canvas.getContext();
@@ -379,7 +393,8 @@ export class AppComponent {
     const file = fileInput!.files![0];
     const formData = new FormData();
     formData.append('file', file);
-  
+    
+    const self = this;
     $.ajax({
       url: 'http://localhost:2115/upload',
       type: 'POST',
@@ -390,26 +405,13 @@ export class AppComponent {
         alert('Upload successful');
         console.log('Response:', response);
   
-        const img = new Image();
-        img.src = URL.createObjectURL(file);
-        img.onload = function() {
-          const fabricImg = new fabric.Image(img);
-          fabricImg.set({
-            height: img.height,
-            width: img.width,
-          });
-  
-          canvas.centerObject(fabricImg);
-          canvas.add(fabricImg);
-          canvas.renderAll();
-        };
+        self.uploadCanvasHelper(file, canvas);
       },
       error: function (xhr, status, error) {
         alert('Upload failed');
         console.error('Error:', error);
       }
     });
-    //this.fabricCanvas.renderAll();
   }
   
 }
