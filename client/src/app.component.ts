@@ -4,6 +4,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { fabric } from 'fabric';
 import { Tool } from './common/Tool';
 import * as $ from "jquery";
+import  toastr  from 'toastr';
+import { ToastrService } from 'ngx-toastr';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -41,7 +43,8 @@ export class AppComponent {
 
   constructor(
     private matIconRegistry: MatIconRegistry,
-    private domSanitizer: DomSanitizer
+    private domSanitizer: DomSanitizer,
+    private toastr: ToastrService
   ) {
     //Adds the svg icons to the material registry.
     this.icons.forEach(({ name, path }) => {
@@ -113,7 +116,7 @@ export class AppComponent {
         this.fabricCanvas.isDrawingMode = false;
         break;
       }
-      //72107
+      //72059
       case Tool.eraser: {
         this.fabricCanvas.selection = false;
         this.fabricCanvas.isDrawingMode = true; // Enable drawing mode
@@ -153,7 +156,7 @@ export class AppComponent {
     }
   }
 
-  //-------------------------------------------------------72107-----------------------------------------------------------
+  //-------------------------------------------------------72107-------------------------------------------------------//
   private setColorWithOpacity(): string {
     const opacity = 0.4;
     switch (this.currentColor) {
@@ -259,7 +262,7 @@ export class AppComponent {
     this.fabricCanvas.add(textbox);
   }
 
-    //-------------------------------------------------------72059-----------------------------------------------------------
+    //-------------------------------------------------------72059-------------------------------------------------------//
 
   cut(): void {
     // Get the currently active objects on the canvas
@@ -334,21 +337,28 @@ export class AppComponent {
     this.fabricCanvas.backgroundColor = 'white';
   }
 
-    //-------------------------------------------------------72054-----------------------------------------------------------
+    //-------------------------------------------------------72054 && 72115-------------------------------------------------------//
+
   downloadCanvas() {
     let canvas = <HTMLCanvasElement>document.getElementById('canvas');
     let canvasUrl = canvas.toDataURL('image/png', 0.5);
 
     const createEl = document.createElement('a');
     createEl.href = canvasUrl;
-    createEl.download = 'download-canvas';
+    const fileName = `${Date.now()}`;
+    createEl.download = fileName;
     createEl.click();
     createEl.remove();
+    this.showNotification("Download successful");
   }
+
+  showNotification(message: string) {
+    this.toastr.success(message);
+  };
 
   uploadCanvasButton() {
     let canvas = <HTMLCanvasElement>document.getElementById('canvas');
-    canvas.toBlob(function(blob) {
+    canvas.toBlob((blob) => {
       const formData = new FormData();
       formData.append('file', blob!, "file.png");
   
@@ -358,13 +368,11 @@ export class AppComponent {
         data: formData,
         processData: false,
         contentType: false,
-        success: function (response) {
-          alert('Image saved on server succesfully!');
-          console.log('Response:', response);
+        success: (response) => {
+          this.showNotification("File saved on server!");
         },
-        error: function (xhr, status, error) {
-          alert('File could not be saved on the server.');
-          console.error('Error:', error);
+        error: (xhr, status, error) => {
+          this.toastr.error('File format not supported');
         }
       });
     });
@@ -379,12 +387,13 @@ export class AppComponent {
         height: img.height,
         width: img.width,
       });
-
       canvas.centerObject(fabricImg);
       canvas.add(fabricImg);
     }
   }
+
   uploadCanvas(event: any) {
+    this.clear()
     const canvas = this.fabricCanvas;
     const context = canvas.getContext();
     context?.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -394,21 +403,18 @@ export class AppComponent {
     const formData = new FormData();
     formData.append('file', file);
     
-    const self = this;
     $.ajax({
       url: 'http://localhost:2115/upload',
       type: 'POST',
       data: formData,
       processData: false,
       contentType: false,
-      success: function (response) {
-        alert('Upload successful');
-        console.log('Response:', response);
-  
-        self.uploadCanvasHelper(file, canvas);
+      success:  (response) => {
+        this.uploadCanvasHelper(file, canvas);
+        this.showNotification("Image uploaded to canvas!");
       },
-      error: function (xhr, status, error) {
-        alert('Upload failed');
+      error:  (xhr, status, error) => {
+        this.toastr.error('File format not supported');
         console.error('Error:', error);
       }
     });

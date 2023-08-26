@@ -22,3 +22,11 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('project');
   });
 });
+
+function beforeEach(arg0: () => Promise<void>) {
+  throw new Error('Function not implemented.');
+}
+
+function expect(app: AppComponent) {
+  throw new Error('Function not implemented.');
+}
