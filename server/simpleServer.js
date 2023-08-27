@@ -109,7 +109,6 @@ router.get('/editedImages/:imageName', async (ctx, next) => {
 
   if (files.includes(imageName)) {
     try {
-      console.log ("oh shit");
       const imageBuffer = fs.readFileSync(editedImagesDirectory + '\\' + imageName);
       const base64Image = imageBuffer.toString('base64');
       

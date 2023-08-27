@@ -448,8 +448,8 @@ export class AppComponent {
         fabric.Image.fromURL(`data:image/png;base64,${response}`, function(fabricImg) {
           // Set additional properties if needed
           fabricImg.set({
-            left: 50,
-            top: 50,
+            left: 0,
+            top: 0,
           });
     
           // Add the Fabric.js image object to the canvas
