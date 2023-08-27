@@ -81,7 +81,6 @@ router.post("/editedImages", editedImagesUpload.single("file"), (context) => { /
 
 router.get("/download/:filename", async (context) => {
   const { filename } = context.params;
-
   const editedImagePath = Path.join(editedImagesDirectory, filename);
 
   if (fs.existsSync(editedImagePath)) {
@@ -93,6 +92,50 @@ router.get("/download/:filename", async (context) => {
     context.body = "File not found";
   }
 });
+
+router.get('/savedImagesNames', (ctx) => {
+  const imageNames = getImageNames(editedImagesDirectory);
+  //console.log(imageNames);
+  //console.log(JSON.stringify(imageNames));
+  ctx.response.type = 'application/json';
+  ctx.response.body = JSON.stringify(imageNames);
+});
+
+router.get('/editedImages/:imageName', async (ctx, next) => {
+  const imageName = ctx.params.imageName;
+
+  const files = fs.readdirSync(editedImagesDirectory);
+  
+
+  if (files.includes(imageName)) {
+    try {
+      console.log ("oh shit");
+      const imageBuffer = fs.readFileSync(editedImagesDirectory + '\\' + imageName);
+      const base64Image = imageBuffer.toString('base64');
+      
+      ctx.response.type = 'text/plain';
+      ctx.response.body = base64Image;
+    } catch (error) {
+      console.log(error);
+      ctx.response.status = 500;
+    }
+  }
+})
+
+function getImageNames(directory) {
+  const imageNames = [];
+
+  try {
+      const files = fs.readdirSync(directory);
+      files.forEach((file) => {
+          imageNames.push(file);
+      });
+  } catch (error) {
+      console.error('Error reading directory:', error);
+  }
+
+  return imageNames;
+}
 
 app.use(cors());
 app.use(router.routes()).use(router.allowedMethods());

@@ -22,10 +22,11 @@
     "module": "ES2022",
     "useDefineForClassFields": false,
     "types": [
-      "jquery"
+      "jquery",
+      "node"
     ],
     "lib": [
-      "ES2022",
+      "es2022",
       "dom"
     ]
   },

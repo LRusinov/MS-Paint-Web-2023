@@ -267,6 +267,13 @@
     </div>
   </div>
 </div>
+<div>
+  <label for="dropdown">Select an option:</label>
+  <select id="dropdown">
+    <option *ngFor="let value of imageNames" [value]="value">{{ value }}</option>
+  </select>
+</div>
+
 <div class="container">
   <div class="canvas-container" (contextmenu)="onRightClick($event)">
     <canvas

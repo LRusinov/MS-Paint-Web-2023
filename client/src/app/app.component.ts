@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import {Component, HostListener, ChangeDetectorRef} from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { fabric } from 'fabric';
@@ -19,6 +19,7 @@ export class AppComponent {
   currentTool: Tool = Tool.pencil;
   selectedArrowTool: Tool = Tool.pen;
   clipboard!: fabric.Object; // contains last copied or cut object(empty if none is done)
+  imageNames!: string[];
 
   //contains icon names and their location
   icons = [
@@ -41,7 +42,8 @@ export class AppComponent {
 
   constructor(
     private matIconRegistry: MatIconRegistry,
-    private domSanitizer: DomSanitizer
+    private domSanitizer: DomSanitizer,
+    private cdr: ChangeDetectorRef
   ) {
     //Adds the svg icons to the material registry.
     this.icons.forEach(({ name, path }) => {
@@ -88,6 +90,25 @@ export class AppComponent {
     });
 
     this.fabricCanvas.renderAll();
+
+    $.ajax({
+      url: 'http://localhost:2115/savedImagesNames',
+      type: 'GET',
+      dataType: 'json',
+      success: (response) => {
+        this.imageNames = response;
+        this.cdr.detectChanges();
+        console.log (this.imageNames);
+      },
+      error: function (response) {
+        console.log(response);
+      } 
+    })
+
+    $(document).on('change', '#dropdown', (event) => {
+      const selectedImageName: string = $(event.target).val()!.toString();
+      this.onImageSelected(selectedImageName);
+    })
   }
 
   setTool(tool: Tool) {
@@ -373,7 +394,9 @@ export class AppComponent {
   uploadCanvasHelper(file: File, canvas: fabric.Canvas) {
     const img = new Image();
     img.src = URL.createObjectURL(file);
+    console.log("canvas url: ", img.src);
     img.onload = function() {
+      console.log("gibdi");
       const fabricImg = new fabric.Image(img);
       fabricImg.set({
         height: img.height,
@@ -412,6 +435,31 @@ export class AppComponent {
         console.error('Error:', error);
       }
     });
+  }
+
+  onImageSelected(imageName: string) {
+    const canvas = this.fabricCanvas;
+
+    $.ajax({
+      url: `http://localhost:2115/editedImages/${imageName}`,
+      type: 'GET',
+      success: (response) => {
+        console.log ("wallahi");
+        fabric.Image.fromURL(`data:image/png;base64,${response}`, function(fabricImg) {
+          // Set additional properties if needed
+          fabricImg.set({
+            left: 50,
+            top: 50,
+          });
+    
+          // Add the Fabric.js image object to the canvas
+          canvas.add(fabricImg);
+        });
+      },
+      error: (error) => {
+        console.error("error encountered:", error);
+      }
+    })
   }
   
 }
