@@ -91,23 +91,28 @@ export class AppComponent {
 
     this.fabricCanvas.renderAll();
 
+    this.getImageNamesRequest();
+
+    $(document).on('change', '#dropdown', (event) => {
+      const selectedImageName: string = $(event.target).val()!.toString();
+      this.onImageSelected(selectedImageName);
+    })
+  }
+
+  getImageNamesRequest() {
     $.ajax({
       url: 'http://localhost:2115/savedImagesNames',
       type: 'GET',
       dataType: 'json',
       success: (response) => {
         this.imageNames = response;
+        this.imageNames.unshift('None');
         this.cdr.detectChanges();
         console.log (this.imageNames);
       },
       error: function (response) {
         console.log(response);
       } 
-    })
-
-    $(document).on('change', '#dropdown', (event) => {
-      const selectedImageName: string = $(event.target).val()!.toString();
-      this.onImageSelected(selectedImageName);
     })
   }
 
@@ -369,6 +374,7 @@ export class AppComponent {
 
   uploadCanvasButton() {
     let canvas = <HTMLCanvasElement>document.getElementById('canvas');
+    let self = this;
     canvas.toBlob(function(blob) {
       const formData = new FormData();
       formData.append('file', blob!, "file.png");
@@ -380,7 +386,8 @@ export class AppComponent {
         processData: false,
         contentType: false,
         success: function (response) {
-          alert('Image saved on server succesfully!');
+          alert('Image saved on server succesfullyq!');
+          self.getImageNamesRequest();
           console.log('Response:', response);
         },
         error: function (xhr, status, error) {
@@ -440,19 +447,19 @@ export class AppComponent {
   onImageSelected(imageName: string) {
     const canvas = this.fabricCanvas;
 
+    if (imageName == "None") {
+      return;
+    }
     $.ajax({
       url: `http://localhost:2115/editedImages/${imageName}`,
       type: 'GET',
       success: (response) => {
-        console.log ("wallahi");
         fabric.Image.fromURL(`data:image/png;base64,${response}`, function(fabricImg) {
-          // Set additional properties if needed
           fabricImg.set({
             left: 0,
             top: 0,
           });
-    
-          // Add the Fabric.js image object to the canvas
+
           canvas.add(fabricImg);
         });
       },
@@ -462,4 +469,23 @@ export class AppComponent {
     })
   }
   
+  onImageDelete() {
+    const selectElement = document.getElementById('dropdown') as HTMLSelectElement;
+    const selectedOption = selectElement.options[selectElement.selectedIndex];
+  
+    const imageName = selectedOption.value;
+    console.log(imageName);
+
+    $.ajax({
+      url: `http://localhost:2115/editedImages/${imageName}`,
+      type: 'DELETE',
+      success: (response) => {
+        this.getImageNamesRequest();
+        alert("sucessful deletion");        
+      },
+      error: (response) => {
+        alert("failed deletion");
+      }
+    })
+  }
 }

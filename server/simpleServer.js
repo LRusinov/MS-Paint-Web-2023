@@ -5,6 +5,7 @@ const Router = require("@koa/router"); // routing and handling
 const multer = require("@koa/multer"); // disk storage engine 
 const cors = require("@koa/cors"); // requests
 const fs = require("fs"); //file image
+const fsp = require("fs").promises;
 
 const app = new Koa();
 const router = new Router();
@@ -95,8 +96,6 @@ router.get("/download/:filename", async (context) => {
 
 router.get('/savedImagesNames', (ctx) => {
   const imageNames = getImageNames(editedImagesDirectory);
-  //console.log(imageNames);
-  //console.log(JSON.stringify(imageNames));
   ctx.response.type = 'application/json';
   ctx.response.body = JSON.stringify(imageNames);
 });
@@ -118,6 +117,21 @@ router.get('/editedImages/:imageName', async (ctx, next) => {
       console.log(error);
       ctx.response.status = 500;
     }
+  }
+})
+
+router.delete('/editedImages/:imageName', async (ctx) => {
+  
+  try {
+    const imagePath = Path.join(editedImagesDirectory, ctx.params.imageName);
+    fs.promises.unlink(imagePath);
+    ctx.status=200;
+    ctx.body = "Successfully deleted image " + ctx.params.imageName + " from server";
+    
+  } catch (error) {
+    console.error("gibdi", error);
+    ctx.status = 500;
+    ctx.body = 'Error deleting image';
   }
 })
 
